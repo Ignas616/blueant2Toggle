@@ -50,7 +50,7 @@ public class TogglService {
             try {
                 entry = reader.read();
             } catch (FlatFileParseException e) {
-                log.warn("Error reading file", e);
+                log.warn("End of file is reached");
                 entry = null;
             }
         }
