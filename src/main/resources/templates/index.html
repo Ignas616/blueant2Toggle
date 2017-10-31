@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head(title='Upload csv file')">
+    <title>Upload BlueAnt to Toggl</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments :: navbar"></div>
+    <h1>Upload csv file</h1>
+    <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">
+        Some Success message
+    </div>
+    <form id="messageForm" th:action="@{/(form)}" th:object="${uploadForm}" action="#" method="post" enctype="multipart/form-data">
+        <!--<div th:if="${#fields.hasErrors('*')}" class="alert alert-error">-->
+            <!--<p th:each="error : ${#fields.errors('*')}" th:text="${error}"> Validation error</p>-->
+        <!--</div>-->
+        <label for="userName">User name</label>
+        <input type="text" th:field="*{userName}" id="userName"/>
+        <label for="password">Password</label>
+        <input type="password" th:field="*{password}" id="password"/>
+        <label for="uploadFile">File to upload:</label>
+        <input type="file" th:field="*{uploadFile}" id="uploadFile"/>
+
+        <div class="form-actions">
+            <input type="submit" value="Upload to Toggl"/>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

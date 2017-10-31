@@ -1,0 +1,31 @@
+image: maven:3-jdk-8
+
+before_script:
+  - echo "This runs before the build jobs."
+
+build:
+  script: "mvn install -B"
+  tags:
+    - shared
+  artifacts:
+    paths:
+      - target/site/jacoco
+
+pages:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - mv target/site/jacoco/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - master
+
+production:
+  type: deploy
+  script:
+    - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/blueant2toggl.git
+    - git push -f heroku master
