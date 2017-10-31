@@ -36,7 +36,10 @@ public class BlueAntEntryProcessor implements ItemProcessor<BlueAntEntry, TimeEn
     private int                            workspaceId;
 
     @Value("${toggl.project.riskManagement}")
-    private int                            projectId;
+    private int                            projectRiskId;
+
+    @Value("${toggl.project.vacation}")
+    private int                            projectVacationId;
 
     @Override
     public TimeEntryWrapper process(BlueAntEntry item) throws Exception {
@@ -47,7 +50,7 @@ public class BlueAntEntryProcessor implements ItemProcessor<BlueAntEntry, TimeEn
         TimeEntry entry = new TimeEntry();
         entry.setDescription(item.getProject());
         entry.setWid(workspaceId);
-        entry.setPid(projectId);
+        entry.setPid(projectRiskId);
         entry.setBillable(true);
         entry.setStart(LocalDate.parse(item.getDate(), GERMAN_DATE).atTime(7, 0));
         entry.setDuration(parseDuration(item.getDuration()));
@@ -57,7 +60,7 @@ public class BlueAntEntryProcessor implements ItemProcessor<BlueAntEntry, TimeEn
         return wrapper;
     }
 
-    private int parseDuration(String duration) {
+    public int parseDuration(String duration) {
         try {
             String germanDuration = duration.replace('.', ',');
             return Math.round(NumberFormat.getNumberInstance(Locale.GERMAN).parse(germanDuration).floatValue() * SECONDS_PER_HOUR);

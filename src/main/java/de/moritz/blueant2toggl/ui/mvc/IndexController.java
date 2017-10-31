@@ -1,5 +1,7 @@
 package de.moritz.blueant2toggl.ui.mvc;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -30,10 +32,18 @@ public class IndexController {
         if (result.hasErrors()) {
             return new ModelAndView("index", "formErrors", result.getAllErrors());
         }
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        if (uploadForm.getStartDate() != null && uploadForm.getEndDate() != null) {
+            startDate = LocalDate.parse(uploadForm.getStartDate());
+            endDate = LocalDate.parse(uploadForm.getEndDate());
 
-        double uploadedHours = togglService.callToggl(uploadForm.getUserName(), uploadForm.getPassword(), uploadForm.getUploadFile().getBytes()) / 3600.0;
+        }
+        double uploadedHours = togglService.callToggl(uploadForm.getUserName(), uploadForm.getPassword(), startDate, endDate,
+                uploadForm.getUploadFile().getBytes()) / 3600.0;
 
         redirect.addFlashAttribute("globalMessage", String.format("Successfully uploaded %10.1f hours of work.", uploadedHours));
         return new ModelAndView("redirect:/");
     }
+
 }
