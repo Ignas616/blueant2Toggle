@@ -18,9 +18,9 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        traceRequest(request, body);
+      //  traceRequest(request, body);
         ClientHttpResponse response = execution.execute(request, body);
-        traceResponse(response);
+     //   traceResponse(response);
         return response;
     }
 
