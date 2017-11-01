@@ -20,12 +20,18 @@
         <input type="password" th:field="*{password}" id="password"/>
         <label for="uploadFile">File to upload:</label>
         <input type="file" th:field="*{uploadFile}" id="uploadFile"/>
+        <br/><br/><br/>
+        <h5>Vacation days</h5>
+        <label for="startDate">Start Date(YYYY-mm-dd)</label>
+        <input type="text" th:field="*{startDate}" id="startDate"/>
+        <label for="endDate">End Date(YYYY-mm-dd)</label>
+        <input type="text" th:field="*{endDate}" id="endDate"/>
 
         <div class="form-actions">
             <input type="submit" value="Upload to Toggl"/>
         </div>
     </form>
-
+    
 </div>
 
 </body>
