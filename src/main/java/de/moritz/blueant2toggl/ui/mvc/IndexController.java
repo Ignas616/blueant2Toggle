@@ -1,7 +1,8 @@
 package de.moritz.blueant2toggl.ui.mvc;
 
-import java.time.LocalDate;
-
+import de.moritz.blueant2toggl.service.TogglService;
+import de.moritz.blueant2toggl.ui.model.UploadForm;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import de.moritz.blueant2toggl.service.TogglService;
-import de.moritz.blueant2toggl.ui.model.UploadForm;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/")
@@ -34,10 +34,10 @@ public class IndexController {
         }
         LocalDate startDate = null;
         LocalDate endDate = null;
-        if (uploadForm.getStartDate() != null && uploadForm.getEndDate() != null) {
+
+        if (StringUtils.isNotBlank(uploadForm.getStartDate()) &&StringUtils.isNotBlank(uploadForm.getEndDate())) {
             startDate = LocalDate.parse(uploadForm.getStartDate());
             endDate = LocalDate.parse(uploadForm.getEndDate());
-
         }
         double uploadedHours = togglService.callToggl(uploadForm.getUserName(), uploadForm.getPassword(), startDate, endDate,
                 uploadForm.getUploadFile().getBytes()) / 3600.0;
