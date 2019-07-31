@@ -62,8 +62,11 @@ public class BlueAntEntryProcessor implements ItemProcessor<BlueAntEntry, TimeEn
 
     public int parseDuration(String duration) {
         try {
-            String germanDuration = duration.replace('.', ',');
-            return Math.round(NumberFormat.getNumberInstance(Locale.GERMAN).parse(germanDuration).floatValue() * SECONDS_PER_HOUR);
+            if (duration.contains(".")){
+                duration = duration.replace('.', ',');
+            }
+
+            return Math.round(NumberFormat.getNumberInstance(Locale.GERMAN).parse(duration).floatValue() * SECONDS_PER_HOUR);
         } catch (ParseException e) {
             log.error("Unparsable duration {}", duration, e);
         }
