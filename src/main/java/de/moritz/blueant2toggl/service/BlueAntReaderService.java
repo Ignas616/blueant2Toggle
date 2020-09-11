@@ -19,7 +19,7 @@ public class BlueAntReaderService {
         FlatFileItemReader<BlueAntEntry> reader = new FlatFileItemReader<>();
         reader.setResource(new ByteArrayResource(fileContent));
         reader.setLineMapper(createBlueAntLineMapper());
-        reader.setLinesToSkip(11);
+        reader.setLinesToSkip(12);
         reader.setEncoding("ISO8859-1");
         return reader;
     }
